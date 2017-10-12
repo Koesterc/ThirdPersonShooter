@@ -9,8 +9,8 @@ public class PlayerScript : MonoBehaviour {
     [System.Serializable]
     public class MouseInput
     {
-        public Vector2 Damping;
-        public Vector2 Sensitivity; 
+        public Vector2 damping;
+        public Vector2 sensitivity; 
     }
 
     [SerializeField]
@@ -30,6 +30,8 @@ public class PlayerScript : MonoBehaviour {
         }
     }
 
+    public Vector2 mouseInput;
+
     // Use this for initialization
     void Awake () {
         playerInput = GameManager.Instance.Controller;
@@ -40,5 +42,8 @@ public class PlayerScript : MonoBehaviour {
 	void Update () {
         Vector2 direction = new Vector3(playerInput.vertical * speed,playerInput.horizontal * speed);
         MoveController.Move(direction);
+
+        mouseInput.x = Mathf.Lerp(mouseInput.x, playerInput.mouseInput.x, 1f / mouseControls.damping.x);
+        transform.Rotate(Vector3.up * mouseInput.x * mouseControls.sensitivity.x);
     }
 }
