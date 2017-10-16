@@ -8,6 +8,8 @@ public class GameManager {
 
     [Tooltip("Holds an instance of the gameobject, game manager")]
     GameObject gameObject;
+    [Tooltip("Holds an instance of the gameobject, pool")]
+    GameObject bulletPool;
 
     static GameManager m_Instance;
     public static GameManager Instance
@@ -19,6 +21,8 @@ public class GameManager {
                 m_Instance = new GameManager();
                 m_Instance.gameObject = new GameObject("GameManager");
                 m_Instance.gameObject.AddComponent<Controller>();
+                m_Instance.gameObject.AddComponent<PoolingScript>();
+                m_Instance.gameObject.GetComponent<PoolingScript>().numberOfBullets = 1000;
             }
             return m_Instance;
         }
